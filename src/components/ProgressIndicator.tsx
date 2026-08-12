@@ -31,7 +31,7 @@ export function ProgressIndicator({
         aria-label={`Slide ${index + 1} of ${total}`}
       >
         <motion.span
-          className="absolute inset-y-0 left-0 block bg-gradient-to-r from-py-blue to-py-yellow"
+          className="absolute inset-y-0 left-0 block bg-gradient-to-r from-vibe-violet to-vibe-coral"
           initial={false}
           animate={{ width: `${percent}%` }}
           transition={
@@ -61,9 +61,9 @@ export function ProgressIndicator({
                 className={cn(
                   "block h-1 rounded-full transition-all duration-300",
                   isCurrent
-                    ? "w-11 bg-py-yellow"
+                    ? "w-11 bg-vibe-coral"
                     : isDone
-                      ? "w-5 bg-py-blue/70 group-hover:bg-py-blue"
+                      ? "w-5 bg-vibe-violet/70 group-hover:bg-vibe-violet"
                       : "w-5 bg-white/18 group-hover:bg-white/45",
                 )}
               />

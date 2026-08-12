@@ -67,16 +67,16 @@ export function ExplanationPanel({
                   className={cn(
                     "flex w-full cursor-pointer items-start gap-3.5 rounded-xl border p-3.5 text-left transition-all duration-200 sm:gap-4 sm:p-4",
                     isActive
-                      ? "border-py-yellow/55 bg-py-yellow/8"
-                      : "border-line bg-navy-900/45 hover:border-py-blue/40 hover:bg-navy-850/70",
+                      ? "border-vibe-coral/55 bg-vibe-coral/8"
+                      : "border-line bg-navy-900/45 hover:border-vibe-violet/40 hover:bg-navy-850/70",
                   )}
                 >
                   <code
                     className={cn(
                       "shrink-0 rounded-md px-2 py-1 font-mono text-[clamp(0.78rem,0.95vw,1rem)] transition-colors duration-200",
                       isActive
-                        ? "bg-py-yellow/18 text-py-yellow"
-                        : "bg-white/6 text-py-blue-bright",
+                        ? "bg-vibe-coral/18 text-vibe-coral"
+                        : "bg-white/6 text-vibe-violet-bright",
                     )}
                   >
                     {item.token}

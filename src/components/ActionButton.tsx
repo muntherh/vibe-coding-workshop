@@ -24,11 +24,11 @@ interface ActionButtonProps extends NativeButtonProps {
 
 const VARIANT: Record<Variant, string> = {
   primary:
-    "bg-py-blue text-[#03121f] hover:bg-py-blue-bright border border-py-blue/60",
+    "bg-vibe-violet text-[#0d0725] hover:bg-vibe-violet-bright border border-vibe-violet/60",
   accent:
-    "bg-py-yellow text-[#1a1400] hover:bg-py-yellow-bright border border-py-yellow/60",
+    "bg-vibe-coral text-[#2a1206] hover:bg-vibe-coral-bright border border-vibe-coral/60",
   outline:
-    "border border-line bg-navy-900/60 text-chalk hover:border-py-blue/55 hover:bg-navy-850",
+    "border border-line bg-navy-900/60 text-chalk hover:border-vibe-violet/55 hover:bg-navy-850",
   ghost: "border border-transparent text-mist hover:text-chalk hover:bg-white/6",
 };
 
@@ -72,7 +72,7 @@ export function ActionButton({
         "disabled:cursor-not-allowed disabled:opacity-45",
         VARIANT[variant],
         SIZE[size],
-        active && "border-py-yellow/60 bg-py-yellow/12 text-py-yellow",
+        active && "border-vibe-coral/60 bg-vibe-coral/12 text-vibe-coral",
         className,
       )}
       {...rest}

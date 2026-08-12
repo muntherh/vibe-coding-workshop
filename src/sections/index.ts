@@ -1,17 +1,19 @@
 import type { ComponentType } from "react";
 import type { SectionProps } from "@/components/PresentationSection";
-import { DataTypesSection } from "@/sections/DataTypesSection";
+import { ClaudeCodeContextSection } from "@/sections/ClaudeCodeContextSection";
+import { ClaudeCodeIntroSection } from "@/sections/ClaudeCodeIntroSection";
+import { ClaudeCodePlanSection } from "@/sections/ClaudeCodePlanSection";
+import { ClaudeCodeToolbeltSection } from "@/sections/ClaudeCodeToolbeltSection";
+import { FirstPromptSection } from "@/sections/FirstPromptSection";
 import { HeroSection } from "@/sections/HeroSection";
-import { HowCodeWorksSection } from "@/sections/HowCodeWorksSection";
-import { ListSection } from "@/sections/ListSection";
-import { ListVsTupleSection } from "@/sections/ListVsTupleSection";
-import { PrintSection } from "@/sections/PrintSection";
+import { HowItWorksSection } from "@/sections/HowItWorksSection";
+import { PromptAnatomySection } from "@/sections/PromptAnatomySection";
 import { QuizSection } from "@/sections/QuizSection";
-import { StringSection } from "@/sections/StringSection";
+import { ReplitSection } from "@/sections/ReplitSection";
+import { ReplitVsClaudeCodeSection } from "@/sections/ReplitVsClaudeCodeSection";
 import { SummarySection } from "@/sections/SummarySection";
-import { TupleSection } from "@/sections/TupleSection";
-import { VariablesSection } from "@/sections/VariablesSection";
-import { WhatIsPythonSection } from "@/sections/WhatIsPythonSection";
+import { ToolsSection } from "@/sections/ToolsSection";
+import { WhatIsVibeCodingSection } from "@/sections/WhatIsVibeCodingSection";
 
 /**
  * Slide components in running order. This array must stay aligned with
@@ -19,15 +21,17 @@ import { WhatIsPythonSection } from "@/sections/WhatIsPythonSection";
  */
 export const SECTION_COMPONENTS: Array<ComponentType<SectionProps>> = [
   HeroSection,
-  WhatIsPythonSection,
-  HowCodeWorksSection,
-  PrintSection,
-  VariablesSection,
-  DataTypesSection,
-  StringSection,
-  ListSection,
-  TupleSection,
-  ListVsTupleSection,
+  WhatIsVibeCodingSection,
+  HowItWorksSection,
+  PromptAnatomySection,
+  FirstPromptSection,
+  ToolsSection,
+  ReplitSection,
+  ClaudeCodeIntroSection,
+  ClaudeCodePlanSection,
+  ClaudeCodeContextSection,
+  ClaudeCodeToolbeltSection,
+  ReplitVsClaudeCodeSection,
   QuizSection,
   SummarySection,
 ];

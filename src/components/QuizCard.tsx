@@ -58,7 +58,7 @@ export function QuizCard({
                 className={cn(
                   "flex w-full items-center gap-3.5 rounded-2xl border p-4 text-left transition-all duration-200 sm:p-5",
                   !answered &&
-                    "cursor-pointer border-line bg-navy-900/55 hover:border-py-blue/50 hover:bg-navy-850",
+                    "cursor-pointer border-line bg-navy-900/55 hover:border-vibe-violet/50 hover:bg-navy-850",
                   answered && "cursor-default",
                   showCorrect && "border-ok/60 bg-ok/10",
                   showWrong && "border-bad/60 bg-bad/10",

@@ -1,9 +1,9 @@
 {
-  "name": "python-basics-presentation",
+  "name": "vibe-coding-workshop",
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "Python Basics — An Interactive Introduction to Programming. A presenter-ready interactive workshop website.",
+  "description": "Introduction to Vibe Coding \u2014 an interactive, presenter-ready workshop focused on Replit and Claude Code.",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

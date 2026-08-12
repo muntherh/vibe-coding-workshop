@@ -13,7 +13,7 @@ import { useDeck } from "@/hooks/useDeckContext";
 
 const TOTAL = QUIZ_QUESTIONS.length;
 
-/** Slide 11 — four short questions, scored live and shared with the summary. */
+/** Slide 13 — five short questions, scored live and shared with the summary. */
 export function QuizSection({ index, registerRef }: SectionProps) {
   const reduceMotion = useReducedMotion();
   const { next, setQuizResult } = useDeck();
@@ -59,7 +59,7 @@ export function QuizSection({ index, registerRef }: SectionProps) {
       registerRef={registerRef}
       eyebrow="Check yourself"
       title="Quick quiz"
-      lead="Four short questions. Nothing you have not already seen."
+      lead="Five short questions. Nothing you have not already seen."
     >
       <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
         <div className="flex items-center gap-2.5">
@@ -92,7 +92,7 @@ export function QuizSection({ index, registerRef }: SectionProps) {
           className="font-mono text-[0.82rem] tracking-[0.16em] text-mist tabular-nums"
           aria-live="polite"
         >
-          Score <span className="text-py-yellow">{score}</span>
+          Score <span className="text-vibe-coral">{score}</span>
           <span className="mx-1 text-dim">/</span>
           <span className="text-dim">{TOTAL}</span>
         </p>

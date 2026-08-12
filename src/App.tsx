@@ -66,7 +66,7 @@ export default function App() {
 
       <a
         href={`#${SLIDES[1]?.id ?? "hero"}`}
-        className="sr-only-focusable focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[80] focus:h-auto focus:w-auto focus:rounded-lg focus:bg-py-yellow focus:px-4 focus:py-2 focus:text-[#1a1400] focus:[clip-path:none]"
+        className="sr-only-focusable focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[80] focus:h-auto focus:w-auto focus:rounded-lg focus:bg-vibe-coral focus:px-4 focus:py-2 focus:text-[#2a1206] focus:[clip-path:none]"
       >
         Skip to the lesson
       </a>

@@ -57,7 +57,7 @@ export function OutputPanel({
           aria-hidden="true"
           className={cn(
             "h-4 w-4",
-            tone === "error" ? "text-bad" : "text-py-blue",
+            tone === "error" ? "text-bad" : "text-vibe-violet",
           )}
         />
         <span
@@ -102,7 +102,7 @@ export function OutputPanel({
                   aria-hidden="true"
                   className={cn(
                     "shrink-0 select-none",
-                    tone === "error" ? "text-bad/60" : "text-py-blue/60",
+                    tone === "error" ? "text-bad/60" : "text-vibe-violet/60",
                   )}
                 >
                   &gt;

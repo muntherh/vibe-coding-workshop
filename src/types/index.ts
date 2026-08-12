@@ -10,31 +10,48 @@ export interface SlideMeta {
   cue: string;
 }
 
-/** A real-world area where Python is used (slide 2). */
-export interface UseCase {
+/**
+ * A clickable card that reveals one example when you open it.
+ *
+ * Used twice: for the places people vibe code (slide 2) and for the parts of
+ * Claude Code worth knowing (slide 11).
+ */
+export interface ExplorerCard {
   id: string;
   title: string;
   icon: LucideIcon;
   /** One short beginner-friendly sentence, revealed on click. */
   example: string;
-  /** A tiny, readable snippet that matches the example. */
+  /** A tiny, readable prompt that matches the example. */
   snippet: string;
 }
 
-/** One of the four core data types (slide 6). */
-export interface DataTypeCard {
+/** One step in an auto-revealed sequence (slides 3 and 8). */
+export interface SequenceStep {
   id: string;
-  name: string;
+  title: string;
+  detail: string;
+  /** A short literal shown at the bottom of the step card. */
   sample: string;
-  definition: string;
-  code: string;
-  comparison: string;
-  /** What `type(value)` prints in Python. */
-  pythonType: string;
-  accent: "blue" | "yellow";
 }
 
-/** A multiple-choice quiz question (slide 11). */
+/** One of the vibe coding tools on the landscape slide (slide 6). */
+export interface ToolCard {
+  id: string;
+  name: string;
+  /** Four or five words describing the shape of the tool. */
+  tagline: string;
+  definition: string;
+  /** A prompt you would realistically give this tool. */
+  promptExample: string;
+  comparison: string;
+  bestFor: string;
+  accent: "violet" | "coral";
+  /** Marks the tool this workshop goes deep on. */
+  focus?: boolean;
+}
+
+/** A multiple-choice quiz question (slide 13). */
 export interface QuizQuestion {
   id: string;
   prompt: string;
@@ -54,7 +71,7 @@ export interface SummaryConcept {
   recap: string;
 }
 
-/** Token kinds produced by the Python highlighter. */
+/** Token kinds produced by the code highlighter. */
 export type TokenKind =
   | "plain"
   | "keyword"

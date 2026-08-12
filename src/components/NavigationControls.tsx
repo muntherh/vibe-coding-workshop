@@ -32,7 +32,7 @@ export function NavigationControls({
         aria-label="Previous slide"
         className={cn(
           BASE,
-          "border-line bg-navy-900/70 text-mist hover:enabled:border-py-blue/50 hover:enabled:text-chalk",
+          "border-line bg-navy-900/70 text-mist hover:enabled:border-vibe-violet/50 hover:enabled:text-chalk",
         )}
       >
         <ChevronLeft aria-hidden="true" className="h-4 w-4" />
@@ -46,7 +46,7 @@ export function NavigationControls({
         aria-label="Next slide"
         className={cn(
           BASE,
-          "border-py-blue/45 bg-py-blue/12 text-chalk hover:enabled:border-py-blue hover:enabled:bg-py-blue/22",
+          "border-vibe-violet/45 bg-vibe-violet/12 text-chalk hover:enabled:border-vibe-violet hover:enabled:bg-vibe-violet/22",
         )}
       >
         <span className="hidden sm:inline">Next</span>

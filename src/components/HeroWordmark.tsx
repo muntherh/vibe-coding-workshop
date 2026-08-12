@@ -2,11 +2,11 @@ import { motion, useReducedMotion, useTransform } from "framer-motion";
 import type { MotionValue } from "framer-motion";
 import { cn } from "@/lib/cn";
 
-const WORD = "PYTHON";
+const WORD = "VIBE CODING";
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 const LETTER_CLASS =
-  "inline-block bg-gradient-to-b from-white via-[#dce8f8] to-[#6f9ac6] bg-clip-text text-transparent";
+  "inline-block bg-gradient-to-b from-white via-[#e4dcfa] to-[#8b7ac6] bg-clip-text text-transparent";
 
 interface HeroWordmarkProps {
   /** 0 at the top of the hero, 1 once the hero has scrolled away. */
@@ -38,7 +38,15 @@ export function HeroWordmark({ progress }: HeroWordmarkProps) {
       className="flex justify-center leading-[var(--word-lh)] font-extrabold text-[length:var(--word-size)] whitespace-nowrap"
       aria-hidden="true"
     >
-      {WORD.split("").map((letter, letterIndex) => (
+      {WORD.split("").map((letter, letterIndex) =>
+        // The word is two words. A plain space between two inline-blocks
+        // collapses to nothing, so the gap has to be an explicit box.
+        letter === " " ? (
+          <span
+            key={`space-${letterIndex}`}
+            className="inline-block w-[0.26em] shrink-0"
+          />
+        ) : (
         <span
           key={`${letter}-${letterIndex}`}
           className="inline-block overflow-hidden pb-[0.06em]"
@@ -60,7 +68,8 @@ export function HeroWordmark({ progress }: HeroWordmarkProps) {
             </motion.span>
           )}
         </span>
-      ))}
+        ),
+      )}
     </span>
   );
 
@@ -96,7 +105,7 @@ export function HeroWordmark({ progress }: HeroWordmarkProps) {
       {/* Soft light bloom sitting behind the letters. */}
       <motion.div
         aria-hidden="true"
-        className="absolute inset-x-[18%] top-[16%] -z-10 h-[62%] rounded-full bg-[radial-gradient(ellipse,rgba(78,163,230,0.2)_0%,transparent_70%)] blur-2xl"
+        className="absolute inset-x-[18%] top-[16%] -z-10 h-[62%] rounded-full bg-[radial-gradient(ellipse,rgba(139,127,240,0.22)_0%,transparent_70%)] blur-2xl"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.6, delay: 0.5, ease: EASE }}

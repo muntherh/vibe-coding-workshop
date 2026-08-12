@@ -25,7 +25,7 @@ interface DeckChromeProps {
 }
 
 const ICON_BUTTON =
-  "inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-xl border border-line bg-navy-900/60 text-mist transition-colors duration-200 hover:border-py-blue/50 hover:text-chalk sm:h-11 sm:w-11";
+  "inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-xl border border-line bg-navy-900/60 text-mist transition-colors duration-200 hover:border-vibe-violet/50 hover:text-chalk sm:h-11 sm:w-11";
 
 /** The persistent presenter controls: top status bar and bottom control bar. */
 export function DeckChrome({
@@ -62,11 +62,11 @@ export function DeckChrome({
             onSelect(0);
           }}
           className="flex items-center gap-2 sm:gap-3"
-          aria-label="Python Basics"
+          aria-label="Introduction to Vibe Coding"
         >
           <div className="hidden flex-col items-start sm:flex">
             
-            <span className="text-[0.92rem] font-medium tracking-tight text-chalk">Python Basics</span>
+            <span className="text-[0.92rem] font-medium tracking-tight text-chalk">Vibe Coding</span>
           </div>
         </a>
 
@@ -75,7 +75,7 @@ export function DeckChrome({
             className="mr-1 font-mono text-[0.8rem] tracking-[0.16em] text-mist tabular-nums sm:mr-2 sm:text-[0.92rem]"
             aria-live="polite"
           >
-            <span className="text-py-yellow">
+            <span className="text-vibe-coral">
               {String(index + 1).padStart(2, "0")}
             </span>
             <span className="mx-1.5 text-dim">/</span>
@@ -88,7 +88,7 @@ export function DeckChrome({
           <button
             type="button"
             onClick={onToggleOverview}
-            className={cn(ICON_BUTTON, overviewOpen && "border-py-yellow/55 text-py-yellow")}
+            className={cn(ICON_BUTTON, overviewOpen && "border-vibe-coral/55 text-vibe-coral")}
             aria-label="Open slide overview"
             aria-expanded={overviewOpen}
             title="Overview (O)"

@@ -63,7 +63,7 @@ export function PresentationSection({
       >
         <header className={cn("mb-[clamp(1.5rem,4vh,3rem)] shrink-0", headerClassName)}>
           <Reveal className="mb-[clamp(0.75rem,1.8vh,1.35rem)] flex items-center gap-4">
-            <span className="font-mono text-[0.78rem] tracking-[0.3em] text-py-yellow tabular-nums sm:text-[0.85rem]">
+            <span className="font-mono text-[0.78rem] tracking-[0.3em] text-vibe-coral tabular-nums sm:text-[0.85rem]">
               {slideNumber}
             </span>
             <span

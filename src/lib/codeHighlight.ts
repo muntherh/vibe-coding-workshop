@@ -1,66 +1,54 @@
 import type { Token, TokenKind } from "@/types";
 
 /**
- * A deliberately small Python tokenizer.
+ * A deliberately small code tokenizer.
  *
- * It only has to colour the handful of teaching snippets in this deck, so it
- * stays a plain string scanner: no dependency, no regex backtracking traps,
- * and — most importantly — no `eval` anywhere near learner input.
+ * It only has to colour the handful of terminal commands and snippets in this
+ * deck, so it stays a plain string scanner: no dependency, no regex
+ * backtracking traps, and — most importantly — no `eval` anywhere near
+ * learner input. Prompts are not tokenized at all; they render as plain text
+ * through CodeBlock's `prompt` variant.
  */
 
 const KEYWORDS = new Set([
-  "and",
-  "as",
-  "assert",
-  "break",
+  "async",
+  "await",
+  "cd",
   "class",
-  "continue",
+  "const",
   "def",
-  "del",
-  "elif",
   "else",
-  "except",
-  "False",
-  "finally",
+  "export",
+  "false",
   "for",
   "from",
-  "global",
+  "function",
+  "git",
   "if",
   "import",
-  "in",
-  "is",
-  "lambda",
-  "None",
-  "nonlocal",
-  "not",
-  "or",
-  "pass",
-  "raise",
+  "let",
+  "new",
+  "npm",
+  "npx",
   "return",
-  "True",
-  "try",
+  "true",
+  "var",
   "while",
-  "with",
-  "yield",
 ]);
 
 const BUILTINS = new Set([
-  "abs",
-  "append",
-  "bool",
-  "dict",
-  "float",
-  "input",
-  "int",
-  "len",
-  "list",
+  "add",
+  "build",
+  "claude",
+  "commit",
+  "console",
+  "dev",
+  "install",
+  "log",
   "print",
-  "range",
-  "remove",
-  "round",
-  "str",
-  "tuple",
-  "type",
+  "push",
+  "run",
+  "test",
 ]);
 
 const BRACKETS = new Set(["(", ")", "[", "]", "{", "}"]);
@@ -84,7 +72,7 @@ function push(tokens: Token[], kind: TokenKind, value: string) {
   tokens.push({ kind, value });
 }
 
-/** Tokenize a single line of Python. */
+/** Tokenize a single line of code. */
 export function tokenizeLine(line: string): Token[] {
   const tokens: Token[] = [];
   let i = 0;
@@ -176,13 +164,13 @@ export function tokenizeCode(code: string): Token[][] {
 /** Tailwind text colour for each token kind. */
 export const TOKEN_CLASS: Record<TokenKind, string> = {
   plain: "text-chalk",
-  keyword: "text-py-yellow font-medium",
-  builtin: "text-py-blue-bright",
-  string: "text-[#8ce0a8]",
-  number: "text-[#ffb86b]",
+  keyword: "text-vibe-coral font-medium",
+  builtin: "text-vibe-violet-bright",
+  string: "text-[#7fdcc0]",
+  number: "text-[#ffc46b]",
   comment: "text-dim italic",
   operator: "text-mist",
   punctuation: "text-mist",
-  bracket: "text-py-yellow",
+  bracket: "text-vibe-coral",
   identifier: "text-chalk",
 };

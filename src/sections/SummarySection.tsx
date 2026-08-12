@@ -14,76 +14,54 @@ import {
   type SectionProps,
 } from "@/components/PresentationSection";
 import { Reveal } from "@/components/Reveal";
+import { SUMMARY_CONCEPTS } from "@/data/lesson";
 import { SLIDE_INDEX } from "@/data/slides";
 import { useDeck } from "@/hooks/useDeckContext";
 
-/* ضع رابط Journey AI الحقيقي هنا */
-const JOURNEY_AI_URL = "https://journey-ai.replit.app";
-const JOURNEY_AI_PROMPT = `I am a complete beginner in Python.
+/** Where "Open Claude Code" sends the room. Swap for your own link if needed. */
+const CLAUDE_CODE_URL = "https://claude.com/claude-code";
 
-Create a simple 6-week learning roadmap for me.
+/**
+ * The prompt the room copies at the end and runs for real.
+ *
+ * It is deliberately a *good* prompt, not merely a working one: it names the
+ * thing, says who it is for, lists what it must do, and asks Claude Code to
+ * explain itself and go one step at a time — the same habits taught earlier.
+ */
+const STARTER_PROMPT = `I am new to coding and this is my first time using Claude Code.
 
-My goal is to understand Python fundamentals and build one small beginner project.
+Build me a small personal task tracker I can run on my own machine.
 
-I can study 30 minutes per day, 5 days per week.
+It must let me:
+- add a task
+- tick a task off
+- delete a task
+- keep my tasks after I close the page
 
-Please include:
+Please:
+- tell me what you are about to do before you change anything
+- keep the code simple and commented, because I want to read it
+- use plain HTML, CSS and JavaScript, with no frameworks
+- tell me exactly how to run it when you are done
 
-- Python basics
-- Variables and data types
-- Strings
-- Lists and tuples
-- Input and output
-- Conditions
-- Loops
-- Functions
-- One small final project
+Go one step at a time and check with me between steps.`;
 
-For each week, include:
-
-- Clear learning goals
-- Simple tasks
-- One beginner-friendly practice activity
-- Recommended free learning resources
-- A short weekly check-in
-
-Keep everything simple, practical, and suitable for a complete beginner.`;
-/** Slide 12 — final learning summary and next steps. */
+/** Slide 14 — what the room learned, and the one thing to do next. */
 export function SummarySection({ index, registerRef }: SectionProps) {
   const reduceMotion = useReducedMotion();
   const [copied, setCopied] = useState(false);
   const { goTo, quizResult } = useDeck();
 
-  const learnedConcepts = [
-    {
-      label: "print()",
-      description: "Display information on the screen.",
-    },
-    {
-      label: "Variables",
-      description: "Store information for later use.",
-    },
-    {
-      label: "Data Types",
-      description: "Understand text, numbers, and true or false values.",
-    },
-    {
-      label: "Lists",
-      description: "Store multiple items that can be changed.",
-    },
-    {
-      label: "Tuples",
-      description: "Store multiple items that normally cannot be changed.",
-    },
-  ];
-
-  function openJourneyAI() {
-    if (!JOURNEY_AI_URL.startsWith("https")) {
-      window.alert("Add the Journey AI URL inside SummarySection.tsx first.");
-      return;
+  async function copyStarterPrompt() {
+    try {
+      await navigator.clipboard.writeText(STARTER_PROMPT);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // Clipboard access can be blocked (insecure origin, denied permission).
+      // The prompt is on screen and selectable, so this is not worth an alert.
+      setCopied(false);
     }
-
-    window.open(JOURNEY_AI_URL, "_blank", "noopener,noreferrer");
   }
 
   return (
@@ -92,13 +70,13 @@ export function SummarySection({ index, registerRef }: SectionProps) {
       registerRef={registerRef}
       eyebrow="Great work"
       title="You learned"
-      lead="You have completed your first introduction to Python."
+      lead="You have finished your first introduction to vibe coding."
       width="wide"
     >
       <ul className="grid grid-cols-2 gap-2.5 lg:grid-cols-5">
-        {learnedConcepts.map((concept, conceptIndex) => (
+        {SUMMARY_CONCEPTS.map((concept, conceptIndex) => (
           <motion.li
-            key={concept.label}
+            key={concept.id}
             initial={reduceMotion ? false : { opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.4 }}
@@ -110,22 +88,28 @@ export function SummarySection({ index, registerRef }: SectionProps) {
             whileHover={reduceMotion ? undefined : { y: -4 }}
             className="glass glass-hover rounded-2xl p-3.5"
           >
-            <span className="flex items-center gap-2.5">
-              <span
-                aria-hidden="true"
-                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-ok/45 bg-ok/12 text-ok"
-              >
-                <Check className="h-4 w-4" />
+            <button
+              type="button"
+              onClick={() => goTo(concept.slideIndex)}
+              className="w-full cursor-pointer text-left"
+            >
+              <span className="flex items-center gap-2.5">
+                <span
+                  aria-hidden="true"
+                  className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-ok/45 bg-ok/12 text-ok"
+                >
+                  <Check className="h-4 w-4" />
+                </span>
+
+                <span className="font-mono text-[clamp(0.85rem,1.05vw,1.1rem)] text-chalk">
+                  {concept.label}
+                </span>
               </span>
 
-              <span className="font-mono text-[clamp(0.95rem,1.2vw,1.2rem)] text-chalk">
-                {concept.label}
+              <span className="mt-3 block text-[clamp(0.8rem,0.95vw,1rem)] leading-relaxed text-mist">
+                {concept.recap}
               </span>
-            </span>
-
-            <p className="mt-3 text-[clamp(0.8rem,0.95vw,1rem)] leading-relaxed text-mist">
-              {concept.description}
-            </p>
+            </button>
           </motion.li>
         ))}
       </ul>
@@ -134,20 +118,20 @@ export function SummarySection({ index, registerRef }: SectionProps) {
         <div className="mt-4 grid items-center gap-4 rounded-2xl border border-line bg-navy-900/45 p-4 lg:grid-cols-[1fr_auto] lg:gap-8">
           <div>
             <p className="text-[clamp(1.15rem,2vw,2rem)] leading-tight font-medium tracking-tight text-chalk">
-              Your Python journey has just started.
+              Now go and build something rough.
             </p>
 
             <p className="mt-2 max-w-2xl text-[clamp(0.9rem,1.1vw,1.15rem)] leading-relaxed text-mist">
-              Practice the basics again or continue with a personalized learning
-              roadmap in Journey AI.
+              The first version is meant to be wrong. Describe it, run it, then
+              say what to fix — that loop is the whole skill.
             </p>
           </div>
 
           {quizResult ? (
-            <div className="flex items-center gap-4 rounded-2xl border border-py-yellow/35 bg-py-yellow/6 px-5 py-4">
+            <div className="flex items-center gap-4 rounded-2xl border border-vibe-coral/35 bg-vibe-coral/6 px-5 py-4">
               <Sparkles
                 aria-hidden="true"
-                className="h-6 w-6 shrink-0 text-py-yellow"
+                className="h-6 w-6 shrink-0 text-vibe-coral"
               />
 
               <div>
@@ -156,7 +140,7 @@ export function SummarySection({ index, registerRef }: SectionProps) {
                 </p>
 
                 <p className="mt-0.5 font-mono text-[clamp(1.35rem,2.2vw,2rem)] text-chalk tabular-nums">
-                  <span className="text-py-yellow">{quizResult.score}</span>
+                  <span className="text-vibe-coral">{quizResult.score}</span>
                   <span className="mx-1 text-dim">/</span>
                   <span className="text-dim">{quizResult.total}</span>
                 </p>
@@ -169,53 +153,51 @@ export function SummarySection({ index, registerRef }: SectionProps) {
           )}
         </div>
       </Reveal>
-<Reveal delay={0.26}>
-  <div className="mt-4 rounded-2xl border border-py-blue/25 bg-navy-950/70 p-4 sm:p-5">
-    <div className="flex flex-wrap items-center justify-between gap-3">
-      <div>
-        <p className="font-display text-[clamp(1.05rem,1.5vw,1.35rem)] font-semibold text-chalk">
-          Continue with Journey AI
-        </p>
 
-        <p className="mt-1 text-sm text-mist">
-          Copy this prompt and paste it into Journey AI to create your learning roadmap.
-        </p>
-      </div>
+      <Reveal delay={0.26}>
+        <div className="mt-4 rounded-2xl border border-vibe-violet/25 bg-navy-950/70 p-4 sm:p-5">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <p className="font-display text-[clamp(1.05rem,1.5vw,1.35rem)] font-semibold text-chalk">
+                Your first real prompt
+              </p>
 
-      <ActionButton
-        icon={copied ? CheckCheck : Copy}
-        variant={copied ? "accent" : "outline"}
-        onClick={async () => {
-          await navigator.clipboard.writeText(JOURNEY_AI_PROMPT);
-          setCopied(true);
-          window.setTimeout(() => setCopied(false), 2000);
-        }}
-      >
-        {copied ? "Copied!" : "Copy Prompt"}
-      </ActionButton>
-    </div>
+              <p className="mt-1 text-sm text-mist">
+                Copy this, open Claude Code in a project folder, and paste it in.
+              </p>
+            </div>
 
-    <textarea
-      value={JOURNEY_AI_PROMPT}
-      readOnly
-      aria-label="Journey AI Python learning prompt"
-      className="mt-4 min-h-[180px] w-full resize-y rounded-xl border border-line bg-navy-950/80 p-4 font-mono text-[0.82rem] leading-6 text-chalk outline-none"
-    />
+            <ActionButton
+              icon={copied ? CheckCheck : Copy}
+              variant={copied ? "accent" : "outline"}
+              onClick={copyStarterPrompt}
+            >
+              {copied ? "Copied!" : "Copy Prompt"}
+            </ActionButton>
+          </div>
 
-    <div className="mt-3 grid gap-2 text-sm text-mist sm:grid-cols-4">
-      <span>1. Copy the prompt</span>
-      <span>2. Open Journey AI</span>
-      <span>3. Paste the prompt</span>
-      <span>4. Generate your roadmap</span>
-    </div>
-  </div>
-</Reveal>
+          <textarea
+            value={STARTER_PROMPT}
+            readOnly
+            aria-label="Starter prompt for your first Claude Code session"
+            className="mt-4 min-h-[180px] w-full resize-y rounded-xl border border-line bg-navy-950/80 p-4 font-mono text-[0.82rem] leading-6 text-chalk outline-none"
+          />
+
+          <div className="mt-3 grid gap-2 text-sm text-mist sm:grid-cols-4">
+            <span>1. Copy the prompt</span>
+            <span>2. Open a project folder</span>
+            <span>3. Run claude</span>
+            <span>4. Paste it in and go</span>
+          </div>
+        </div>
+      </Reveal>
+
       <Reveal delay={0.28}>
         <div className="mt-4 flex flex-wrap gap-3">
           <ActionButton
             variant="accent"
             icon={RotateCcw}
-            onClick={() => goTo(SLIDE_INDEX["what-is-python"] ?? 1)}
+            onClick={() => goTo(SLIDE_INDEX["what-is-vibe-coding"] ?? 1)}
           >
             Practice Again
           </ActionButton>
@@ -223,16 +205,18 @@ export function SummarySection({ index, registerRef }: SectionProps) {
           <ActionButton
             variant="outline"
             icon={ExternalLink}
-            onClick={openJourneyAI}
+            onClick={() =>
+              window.open(CLAUDE_CODE_URL, "_blank", "noopener,noreferrer")
+            }
           >
-            Continue with Journey AI
+            Open Claude Code
           </ActionButton>
         </div>
       </Reveal>
 
       <Reveal delay={0.34}>
         <p className="mt-3 font-mono text-[0.7rem] tracking-[0.18em] text-dim uppercase">
-          Learn → Practice → Build your roadmap
+          Describe → Generate → Run → Refine
         </p>
       </Reveal>
     </PresentationSection>

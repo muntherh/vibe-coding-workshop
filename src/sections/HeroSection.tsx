@@ -52,7 +52,7 @@ export function HeroSection({ registerRef }: SectionProps) {
       className="deck-slide relative flex min-h-[var(--vh-full)] w-full flex-col"
     >
       <h1 id="hero-heading" className="sr-only">
-        Python Basics — An Interactive Introduction to Programming
+        Introduction to Vibe Coding — Build Software by Describing It
       </h1>
 
       <HeroWordmark progress={progress} />
@@ -67,25 +67,26 @@ export function HeroSection({ registerRef }: SectionProps) {
         
         <motion.p
           {...fadeUp(1.0)}
-          className="flex items-center gap-4 font-display text-[clamp(1.15rem,2.6vw,2.4rem)] font-light tracking-[0.34em] text-py-yellow uppercase"
+          className="flex items-center gap-4 font-display text-[clamp(1.15rem,2.6vw,2.4rem)] font-light tracking-[0.34em] text-vibe-coral uppercase"
         >
-          <span aria-hidden="true" className="h-px w-8 bg-py-yellow/40 sm:w-14" />
-          Basics
-          <span aria-hidden="true" className="h-px w-8 bg-py-yellow/40 sm:w-14" />
+          <span aria-hidden="true" className="h-px w-8 bg-vibe-coral/40 sm:w-14" />
+          Introduction
+          <span aria-hidden="true" className="h-px w-8 bg-vibe-coral/40 sm:w-14" />
         </motion.p>
 
         <motion.p
           {...fadeUp(1.12)}
           className="mt-[clamp(0.85rem,2vh,2rem)] max-w-[24ch] text-[clamp(1.15rem,2.15vw,2.15rem)] leading-[1.25] font-medium tracking-[-0.02em] text-chalk text-balance-tight sm:max-w-[30ch]"
         >
-          An Interactive Introduction to Programming
+          Build software by describing it
         </motion.p>
 
         <motion.p
           {...fadeUp(1.24)}
           className="mt-[clamp(0.5rem,1.6vh,1.1rem)] max-w-[46ch] text-[clamp(0.95rem,1.25vw,1.3rem)] leading-relaxed text-mist"
         >
-          Learn how Python works through simple examples.
+          Learn to turn plain language into working apps — with Replit and
+          Claude Code.
         </motion.p>
 
         <motion.div
@@ -97,7 +98,7 @@ export function HeroSection({ registerRef }: SectionProps) {
             size="lg"
             icon={ArrowDown}
             onClick={next}
-            className="glow-yellow"
+            className="glow-accent"
           >
             Start Learning
           </ActionButton>

@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Python Basics">
-  <rect width="64" height="64" rx="14" fill="#0b1220"/>
-  <rect x="0.75" y="0.75" width="62.5" height="62.5" rx="13.25" fill="none" stroke="#1e2b45" stroke-width="1.5"/>
-  <path d="M14 20 L23 32 L14 44" fill="none" stroke="#4ea3e6" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M31 44 H50" fill="none" stroke="#ffd43b" stroke-width="5.5" stroke-linecap="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Vibe Coding">
+  <rect width="64" height="64" rx="14" fill="#0e1226"/>
+  <rect x="0.75" y="0.75" width="62.5" height="62.5" rx="13.25" fill="none" stroke="#2a2c52" stroke-width="1.5"/>
+  <path d="M14 20 L23 32 L14 44" fill="none" stroke="#8b7ff0" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M31 44 H50" fill="none" stroke="#ff8f6b" stroke-width="5.5" stroke-linecap="round"/>
 </svg>

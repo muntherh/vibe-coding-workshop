@@ -71,7 +71,7 @@ export function OverviewMenu({
                 type="button"
                 onClick={onClose}
                 aria-label="Close overview"
-                className="inline-flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-xl border border-line bg-navy-900/70 text-mist transition-colors duration-200 hover:border-py-blue/50 hover:text-chalk"
+                className="inline-flex h-11 w-11 shrink-0 cursor-pointer items-center justify-center rounded-xl border border-line bg-navy-900/70 text-mist transition-colors duration-200 hover:border-vibe-violet/50 hover:text-chalk"
               >
                 <X aria-hidden="true" className="h-5 w-5" />
               </button>
@@ -92,15 +92,15 @@ export function OverviewMenu({
                       className={cn(
                         "group flex w-full cursor-pointer flex-col gap-2 rounded-2xl border p-5 text-left transition-all duration-200",
                         isCurrent
-                          ? "border-py-yellow/55 bg-py-yellow/8"
-                          : "border-line bg-navy-900/55 hover:border-py-blue/45 hover:bg-navy-850",
+                          ? "border-vibe-coral/55 bg-vibe-coral/8"
+                          : "border-line bg-navy-900/55 hover:border-vibe-violet/45 hover:bg-navy-850",
                       )}
                     >
                       <span className="flex items-center gap-3">
                         <span
                           className={cn(
                             "font-mono text-[0.8rem] tabular-nums",
-                            isCurrent ? "text-py-yellow" : "text-dim",
+                            isCurrent ? "text-vibe-coral" : "text-dim",
                           )}
                         >
                           {String(slideIndex + 1).padStart(2, "0")}
