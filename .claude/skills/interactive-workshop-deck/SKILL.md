@@ -2,19 +2,17 @@
 name: interactive-workshop-deck
 description: >-
   Build a presenter-driven interactive teaching website — a full-screen slide
-  deck that runs in the browser, where every slide teaches one idea and gives
-  the room something to click. Use this whenever someone wants to teach, train,
-  onboard, or run a workshop with a website rather than PowerPoint: "a workshop
-  about X", "an interactive lesson on Y", "slides for my session", "a teaching
-  site", "a course page", "replace my deck", "ورشة تفاعلية", "درس تفاعلي". Also
-  use it when adapting an existing deck of this kind to a new topic, adding
-  slides to one, or reviewing one for accessibility, layout and RTL problems.
-  Reach for it even when the person says "presentation" or "slides" and has not
-  said the word "website" — a deck that has to be interactive is this, not a
-  PowerPoint export. It also writes the presenter script that goes with a deck —
-  the word-for-word "what do I say on each slide" — so use it for "presenter
-  notes", "speaker script", "what should I say", "سكربت", "ماذا أقول" as well,
-  whether asked for alongside a new deck or on its own for a deck that exists.
+  deck in the browser where every slide teaches one idea and gives the room
+  something to click — and the presenter script that goes with it. Use this
+  whenever someone wants to teach, train, onboard, or run a workshop with a
+  website rather than PowerPoint: "a workshop about X", "an interactive lesson
+  on Y", "slides for my session", "a teaching site", "a course page", "replace
+  my deck", "ورشة تفاعلية". Also for adapting such a deck to a new topic, adding
+  slides, or reviewing one for accessibility, layout and RTL problems. Reach for
+  it even when they say "presentation" or "slides" without saying "website" — a
+  deck that must be interactive is this, not a PowerPoint export. Use it for the
+  script alone too, for a deck that already exists: "presenter notes", "speaker
+  script", "what do I say on each slide", "سكربت", "ماذا أقول".
 ---
 
 # Interactive workshop deck
