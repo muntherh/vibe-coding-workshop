@@ -11,7 +11,10 @@ description: >-
   slides to one, or reviewing one for accessibility, layout and RTL problems.
   Reach for it even when the person says "presentation" or "slides" and has not
   said the word "website" — a deck that has to be interactive is this, not a
-  PowerPoint export.
+  PowerPoint export. It also writes the presenter script that goes with a deck —
+  the word-for-word "what do I say on each slide" — so use it for "presenter
+  notes", "speaker script", "what should I say", "سكربت", "ماذا أقول" as well,
+  whether asked for alongside a new deck or on its own for a deck that exists.
 ---
 
 # Interactive workshop deck
@@ -142,6 +145,30 @@ empty value and a very long one. Walk the whole deck with the keyboard alone.
 Report what you verified and what you did not. "Built cleanly" is not
 "works", and a slide that renders is not a slide that works.
 
+### 5. Write the presenter script
+
+The deck is half the deliverable. Whoever asked for it is going to stand in
+front of a room with it, often for the first time, and a deck with no script
+leaves them improvising the part that decides whether the session lands. Build
+it once the deck is finished, from `assets/script/template.html`.
+
+**Write it in the language of the deck.** Read `src/deck.config.ts`: an `ar`
+deck gets an Arabic script on an RTL page, an `en` deck gets an English one.
+Translate the whole page, not only the spoken lines — headings, chips and
+labels too. Slide titles and interface terms stay in the deck's own language
+either way, because the presenter is pointing at those words on screen while
+saying them.
+
+Every slide gets three separated parts: **Say** (the words, verbatim), **Do**
+(the action on screen, never read aloud), and **Bridge** (one sentence into
+the next slide). Keep spoken sentences under about fifteen words — one breath
+each — so the presenter can look down, take a line, and look back up.
+
+`references/presenter-script.md` has the full method, including timing,
+the two appendices, and what to do when the room's language differs from the
+deck's. Publish the finished script as an artifact: presenters read it on a
+phone while the laptop is showing the deck.
+
 ## The content model
 
 `src/data/lesson.ts` holds typed objects, one export per slide, and the
@@ -234,6 +261,8 @@ contract; keep it:
 - `references/interactions.md` — the interaction components in detail
 - `references/rtl.md` — Arabic and bidirectional text
 - `references/verification.md` — the verification pass in full
+- `references/presenter-script.md` — writing the "what do I say" script
+- `assets/script/template.html` — the script page, both directions and themes
 - `scripts/scaffold.sh` — create a new deck project
 - `scripts/verify.mjs` — structural checks across the three viewports
 

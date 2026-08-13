@@ -1,0 +1,414 @@
+<!--
+  Presenter script page — template.
+
+  Fill in the placeholders and repeat the <article class="slide"> block once
+  per slide. The CSS below needs no changes: it is written with logical
+  properties throughout, so the whole page mirrors correctly when
+  __DIR__ is "rtl", and it carries both light and dark themes.
+
+  Placeholders:
+    __TITLE__        deck title, e.g. "Introduction to Vibe Coding"
+    __DIR__          "ltr" or "rtl" — copy from src/deck.config.ts
+    __LANG__         "en", "ar", … — copy from src/deck.config.ts
+    __PAGE_TITLE__   the <title>: "<Deck Name> Presenter Script", or its
+                     translation. Keep it a name, not a sentence.
+
+  Every visible string below is in English. Translate all of it — including
+  the headings, the chips, the "Do" tag and the section titles — into the
+  deck's language. A script in the deck's language with English furniture
+  around it reads as unfinished.
+-->
+<title>__PAGE_TITLE__</title>
+<style>
+  /* Dark-first: this is read in a dim room while presenting. A light theme is
+     there for reading it through beforehand on a bright screen. */
+  :root {
+    --ground: #0b0d18;
+    --surface: #141833;
+    --surface-2: #1b2043;
+    --line: #2a2f5c;
+    --ink: #f0eefb;
+    --ink-2: #b3adce;
+    --ink-3: #7d78a0;
+    --violet: #9d92f5;
+    --coral: #ff9f7d;
+    --coral-soft: rgba(255, 143, 107, 0.11);
+    --violet-soft: rgba(139, 127, 240, 0.13);
+    --shadow: 0 1px 0 rgba(255, 255, 255, 0.04);
+
+    /* Latin faces first, Arabic after: the browser walks the stack per glyph,
+       so one declaration serves both an English script and an Arabic one with
+       English product names inside it. */
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      "SF Arabic", "Geeza Pro", "Noto Sans Arabic", "Helvetica Neue", Arial,
+      sans-serif;
+    --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  }
+
+  :root[data-theme="light"] {
+    --ground: #f6f4fb;
+    --surface: #ffffff;
+    --surface-2: #f0edf9;
+    --line: #ddd7ee;
+    --ink: #14162c;
+    --ink-2: #4a4767;
+    --ink-3: #7d78a0;
+    --violet: #5f52c9;
+    --coral: #b8481a;
+    --coral-soft: rgba(184, 72, 26, 0.08);
+    --violet-soft: rgba(95, 82, 201, 0.08);
+    --shadow: 0 1px 2px rgba(20, 22, 44, 0.06);
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --ground: #f6f4fb;
+      --surface: #ffffff;
+      --surface-2: #f0edf9;
+      --line: #ddd7ee;
+      --ink: #14162c;
+      --ink-2: #4a4767;
+      --ink-3: #7d78a0;
+      --violet: #5f52c9;
+      --coral: #b8481a;
+      --coral-soft: rgba(184, 72, 26, 0.08);
+      --violet-soft: rgba(95, 82, 201, 0.08);
+      --shadow: 0 1px 2px rgba(20, 22, 44, 0.06);
+    }
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.7;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  .wrap {
+    max-width: 52rem;
+    margin: 0 auto;
+    padding: clamp(1.5rem, 4vw, 3.5rem) clamp(1rem, 4vw, 2rem) 5rem;
+  }
+
+  .mast { display: flex; flex-direction: column; gap: 1rem; }
+
+  h1 {
+    margin: 0;
+    font-size: clamp(1.7rem, 5vw, 2.7rem);
+    line-height: 1.15;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+
+  .facts { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+  .fact {
+    font-family: var(--mono);
+    font-size: 0.76rem;
+    font-variant-numeric: tabular-nums;
+    padding: 0.3rem 0.65rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--ink-2);
+    background: var(--surface);
+  }
+
+  .note { margin: 0; color: var(--ink-2); font-size: 1rem; max-width: 64ch; }
+  .note b { color: var(--ink); }
+
+  .preflight {
+    margin-top: 2rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 1.25rem 1.4rem;
+    box-shadow: var(--shadow);
+  }
+  .preflight h2 { margin: 0 0 0.75rem; font-size: 1.02rem; }
+  .preflight ul { margin: 0; padding-inline-start: 1.15rem; display: grid; gap: 0.45rem; }
+  .preflight li { color: var(--ink-2); font-size: 0.96rem; }
+  .preflight strong { color: var(--ink); font-weight: 700; }
+
+  .deck { display: grid; gap: 1.1rem; margin-top: 2.5rem; }
+
+  .slide {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+
+  .head {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.85rem;
+    padding: 0.95rem 1.25rem;
+    background: var(--surface-2);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .num {
+    font-family: var(--mono);
+    font-size: 1.05rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: var(--coral);
+  }
+
+  .name { font-size: 1.1rem; font-weight: 700; flex: 1; min-width: 8rem; }
+
+  .clock {
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-3);
+    white-space: nowrap;
+  }
+
+  .chip {
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.5rem;
+    border-radius: 5px;
+    white-space: nowrap;
+  }
+  .chip.talk { background: var(--violet-soft); color: var(--violet); }
+  .chip.net  { background: var(--coral-soft); color: var(--coral); }
+
+  .body { padding: 1.15rem 1.25rem 1.35rem; display: grid; gap: 1rem; }
+
+  /* The lines you say. Short paragraphs on purpose: each one is about one
+     breath, so the presenter's eye can grab it and their head can come up. */
+  .say {
+    border-inline-start: 3px solid var(--coral);
+    background: var(--coral-soft);
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
+    border-start-end-radius: 10px;
+    border-end-end-radius: 10px;
+    padding: 0.95rem 1.15rem;
+    font-size: 1.09rem;
+    line-height: 1.8;
+  }
+  .say p { margin: 0 0 0.7rem; }
+  .say p:last-child { margin-bottom: 0; }
+  .say em {
+    display: block;
+    font-style: normal;
+    color: var(--ink-3);
+    font-size: 0.87rem;
+    margin: 0.55rem 0;
+  }
+
+  .lines { display: grid; gap: 0.4rem; margin: 0.6rem 0; }
+  .lines div { padding-inline-start: 0.8rem; border-inline-start: 2px solid var(--line); }
+
+  /* Stage direction — deliberately quieter than the speech. */
+  .do {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.6rem;
+    align-items: start;
+    color: var(--ink-2);
+    font-size: 0.95rem;
+  }
+  .do .tag {
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--violet);
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    padding: 0.16rem 0.45rem;
+    white-space: nowrap;
+    margin-top: 0.2rem;
+  }
+
+  .bridge {
+    color: var(--ink-2);
+    font-size: 1rem;
+    border-top: 1px dashed var(--line);
+    padding-top: 0.85rem;
+  }
+  .bridge b {
+    display: block;
+    color: var(--violet);
+    font-weight: 700;
+    font-size: 0.66rem;
+    font-family: var(--mono);
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    margin-bottom: 0.25rem;
+  }
+
+  .block { margin-top: 2.5rem; }
+  .block > h2 {
+    font-size: 1.3rem;
+    margin: 0 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--line);
+  }
+
+  .qa { display: grid; gap: 0.85rem; }
+  .qa details {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 0.85rem 1.1rem;
+    box-shadow: var(--shadow);
+  }
+  .qa summary { cursor: pointer; font-weight: 700; font-size: 1.02rem; list-style: none; }
+  .qa summary::-webkit-details-marker { display: none; }
+  .qa summary::before {
+    content: "?";
+    color: var(--coral);
+    font-family: var(--mono);
+    font-weight: 700;
+    margin-inline-end: 0.6rem;
+  }
+  .qa details[open] summary { margin-bottom: 0.7rem; }
+  .qa p { margin: 0; color: var(--ink-2); font-size: 1.02rem; line-height: 1.75; }
+
+  .risks { display: grid; gap: 0.8rem; }
+  .risk {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-inline-start: 3px solid var(--violet);
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
+    border-start-end-radius: 12px;
+    border-end-end-radius: 12px;
+    padding: 0.85rem 1.1rem;
+  }
+  .risk h3 { margin: 0 0 0.3rem; font-size: 1.02rem; }
+  .risk p { margin: 0; color: var(--ink-2); font-size: 0.98rem; }
+
+  /* Commands and file names stay left-to-right even in an RTL script, for the
+     same reason they do in the deck: the bidi algorithm otherwise reorders a
+     line like `npm run dev -- --host` around its punctuation. */
+  code {
+    font-family: var(--mono);
+    font-size: 0.88em;
+    direction: ltr;
+    unicode-bidi: isolate;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    padding: 0.08em 0.36em;
+  }
+
+  /* Wrap Latin words inside RTL prose in <bdi> so they keep their own order. */
+  bdi { unicode-bidi: isolate; }
+
+  :focus-visible { outline: 2px solid var(--coral); outline-offset: 3px; border-radius: 4px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+</style>
+
+<div class="wrap" dir="__DIR__" lang="__LANG__">
+
+  <header class="mast">
+    <h1>__TITLE__ — Presenter Script</h1>
+    <div class="facts">
+      <span class="fact">N slides</span>
+      <span class="fact">~NN min</span>
+      <span class="fact">N interactive slides</span>
+      <!-- Drop this chip if no slide needs the network. -->
+      <span class="fact">1 slide needs internet</span>
+    </div>
+    <p class="note">
+      Everything in an <b>orange block</b> is written to be said out loud, exactly as it
+      is. The sentences are short on purpose — about one breath each — so you can
+      look down, take a line, and look back up at the room. The grey lines are for
+      you only. Do not read those.
+    </p>
+  </header>
+
+  <section class="preflight">
+    <h2>Before you start</h2>
+    <ul>
+      <li>Open the site and press <code>f</code> for full screen.</li>
+      <li>Press one arrow forward and one back, to check that it responds.</li>
+      <li><code>o</code> opens the slide list if you need to jump.</li>
+      <li><strong>You do not need internet.</strong> Everything in the deck is simulated locally.</li>
+      <!-- Add any per-deck setup: a second tab, a file to have open, a login. -->
+    </ul>
+  </section>
+
+  <main class="deck">
+
+    <!-- ===== Repeat this block once per slide ===================== -->
+    <article class="slide">
+      <div class="head">
+        <span class="num">01</span>
+        <span class="name">Slide title, as it appears on screen</span>
+        <!-- Optional. Keep only what applies:
+             <span class="chip talk">Audience</span>
+             <span class="chip net">Internet</span> -->
+        <span class="clock">2 min · 00→02</span>
+      </div>
+      <div class="body">
+        <div class="say">
+          <p>“One short sentence. About one breath long.”</p>
+          <p>“Another one. Never more than about fifteen words.”</p>
+          <em>A stage direction inside the speech, when the presenter must stop and wait.</em>
+          <p>“The line to say after the pause.”</p>
+          <!-- For a list of parallel points, use .lines so the eye can find
+               its place again after looking up at the room: -->
+          <div class="lines">
+            <div>“<b>First point.</b> One sentence explaining it.”</div>
+            <div>“<b>Second point.</b> One sentence explaining it.”</div>
+          </div>
+        </div>
+        <div class="do">
+          <span class="tag">Do</span>
+          <span>What to do on screen, and — where it matters — why it matters.</span>
+        </div>
+        <div class="bridge"><b>Bridge</b>“The sentence that carries the room into the next slide.”</div>
+      </div>
+    </article>
+    <!-- ============================================================ -->
+
+  </main>
+
+  <section class="block">
+    <h2>Questions you should expect</h2>
+    <div class="qa">
+      <details>
+        <summary>The question, in the words an attendee would actually use</summary>
+        <p>“The answer, written to be said out loud, not read.”</p>
+      </details>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>If something goes wrong</h2>
+    <div class="risks">
+      <div class="risk">
+        <h3>The internet drops</h3>
+        <p>What to do. Be specific about which slides are affected.</p>
+      </div>
+      <div class="risk">
+        <h3>You are running out of time</h3>
+        <p>Which slides to cut, and — more importantly — which ones never to cut.</p>
+      </div>
+      <div class="risk">
+        <h3>The room is silent</h3>
+        <p>Which slide to jump to. A closed question restarts a room faster than an open one.</p>
+      </div>
+    </div>
+  </section>
+
+</div>
