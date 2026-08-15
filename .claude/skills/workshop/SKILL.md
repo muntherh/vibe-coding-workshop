@@ -1,5 +1,5 @@
 ---
-name: interactive-workshop-deck
+name: workshop
 description: >-
   Build a presenter-driven interactive teaching website — a full-screen slide
   deck in the browser where every slide teaches one idea and gives the room
