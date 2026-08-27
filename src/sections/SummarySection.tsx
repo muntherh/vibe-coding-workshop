@@ -205,9 +205,9 @@ export function SummarySection({ index, registerRef }: SectionProps) {
           <ActionButton
             variant="outline"
             icon={ExternalLink}
-            onClick={() =>
-              window.open(CLAUDE_CODE_URL, "_blank", "noopener,noreferrer")
-            }
+            href={CLAUDE_CODE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
           >
             Open Claude Code
           </ActionButton>

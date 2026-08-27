@@ -1,6 +1,6 @@
 import { motion, useReducedMotion } from "framer-motion";
 import type { LucideIcon } from "lucide-react";
-import type { ButtonHTMLAttributes, ReactNode } from "react";
+import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from "react";
 import { cn } from "@/lib/cn";
 
 type Variant = "primary" | "accent" | "ghost" | "outline";
@@ -11,7 +11,12 @@ type NativeButtonProps = Omit<
   "onAnimationStart" | "onAnimationEnd" | "onAnimationIteration" | "onDrag" | "onDragStart" | "onDragEnd"
 >;
 
-interface ActionButtonProps extends NativeButtonProps {
+type NativeAnchorProps = Omit<
+  AnchorHTMLAttributes<HTMLAnchorElement>,
+  "onAnimationStart" | "onAnimationEnd" | "onAnimationIteration" | "onDrag" | "onDragStart" | "onDragEnd"
+>;
+
+interface ActionButtonBaseProps {
   children: ReactNode;
   icon?: LucideIcon;
   variant?: Variant;
@@ -21,6 +26,17 @@ interface ActionButtonProps extends NativeButtonProps {
   /** Extra classes for the icon, e.g. a spin while running. */
   iconClassName?: string;
 }
+
+type ActionButtonProps = ActionButtonBaseProps &
+  (
+    | ({ href?: undefined } & NativeButtonProps)
+    // Passing `href` renders a real <a> instead of a <button> firing
+    // window.open(): a genuine link works under sandboxes (like the
+    // published-artifact preview) that block script-triggered popups, still
+    // supports ctrl/cmd-click and "open in new tab", and is what a link to
+    // another page should be semantically anyway.
+    | ({ href: string } & NativeAnchorProps)
+  );
 
 const VARIANT: Record<Variant, string> = {
   primary:
@@ -56,33 +72,49 @@ export function ActionButton({
   active = false,
   iconClassName,
   className,
-  type = "button",
   ...rest
 }: ActionButtonProps) {
   const reduceMotion = useReducedMotion();
 
+  const sharedClassName = cn(
+    "inline-flex cursor-pointer items-center justify-center font-medium transition-colors duration-200 select-none",
+    "disabled:cursor-not-allowed disabled:opacity-45",
+    VARIANT[variant],
+    SIZE[size],
+    active && "border-vibe-coral/60 bg-vibe-coral/12 text-vibe-coral",
+    className,
+  );
+  const iconEl = Icon ? (
+    <Icon aria-hidden="true" className={cn(ICON_SIZE[size], iconClassName)} />
+  ) : null;
+  const motionProps = {
+    whileHover: reduceMotion ? undefined : { y: -2 },
+    whileTap: reduceMotion ? undefined : { scale: 0.97 },
+    transition: { duration: 0.2, ease: [0.22, 1, 0.36, 1] as const },
+  };
+
+  if ("href" in rest && rest.href !== undefined) {
+    const { href, ...anchorRest } = rest as { href: string } & NativeAnchorProps;
+    return (
+      <motion.a href={href} className={sharedClassName} {...motionProps} {...anchorRest}>
+        {iconEl}
+        {children}
+      </motion.a>
+    );
+  }
+
+  const { type = "button", disabled, ...buttonRest } = rest as NativeButtonProps;
   return (
     <motion.button
       type={type}
-      whileHover={reduceMotion || rest.disabled ? undefined : { y: -2 }}
-      whileTap={reduceMotion || rest.disabled ? undefined : { scale: 0.97 }}
-      transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-      className={cn(
-        "inline-flex cursor-pointer items-center justify-center font-medium transition-colors duration-200 select-none",
-        "disabled:cursor-not-allowed disabled:opacity-45",
-        VARIANT[variant],
-        SIZE[size],
-        active && "border-vibe-coral/60 bg-vibe-coral/12 text-vibe-coral",
-        className,
-      )}
-      {...rest}
+      disabled={disabled}
+      whileHover={reduceMotion || disabled ? undefined : { y: -2 }}
+      whileTap={reduceMotion || disabled ? undefined : { scale: 0.97 }}
+      transition={motionProps.transition}
+      className={sharedClassName}
+      {...buttonRest}
     >
-      {Icon ? (
-        <Icon
-          aria-hidden="true"
-          className={cn(ICON_SIZE[size], iconClassName)}
-        />
-      ) : null}
+      {iconEl}
       {children}
     </motion.button>
   );
