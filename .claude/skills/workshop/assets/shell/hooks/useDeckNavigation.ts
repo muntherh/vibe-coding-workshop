@@ -53,9 +53,26 @@ export function useDeckNavigation(): DeckNavigation {
   const [index, setIndex] = useState(0);
   const [runId, setRunId] = useState(0);
   const slideRefs = useRef<Array<HTMLElement | null>>([]);
-  const indexRef = useRef(0);
 
-  indexRef.current = index;
+  // The slide `goTo` most recently aimed for. next()/previous() read this —
+  // never the observer-driven `index` state — so a second press queued
+  // while a smooth scroll is still animating advances from the intended
+  // slide, not from whichever slide the IntersectionObserver happens to be
+  // transiting past at that instant. Without this split, pressing "next"
+  // twice quickly could land two, three, even five slides ahead: the second
+  // press would compute target+1 from a mid-flight observer reading instead
+  // of from the first press's actual target.
+  const targetIndexRef = useRef(0);
+
+  // True while a goTo-triggered scroll is animating. The observer still
+  // fires for every slide the viewport passes over during that transit;
+  // suppressing its `setIndex` calls until the scroll settles is what stops
+  // the displayed index (and therefore next/previous) from bouncing through
+  // intermediate slides mid-jump.
+  const isProgrammaticScrollRef = useRef(false);
+  const settleTimerRef = useRef<
+    ReturnType<typeof window.setTimeout> | undefined
+  >(undefined);
 
   const registerSlide = useCallback(
     (slideIndex: number) => (node: HTMLElement | null) => {
@@ -72,9 +89,22 @@ export function useDeckNavigation(): DeckNavigation {
 
       // Long jumps are snapped instantly: smooth-scrolling across ten
       // viewports looks slow and fights scroll-snap on the way.
-      const distance = Math.abs(clamped - indexRef.current);
+      const distance = Math.abs(clamped - targetIndexRef.current);
       const instant =
         options?.instant ?? (distance > 2 || prefersReducedMotion());
+
+      targetIndexRef.current = clamped;
+      isProgrammaticScrollRef.current = true;
+      window.clearTimeout(settleTimerRef.current);
+      // Fallback in case 'scrollend' doesn't fire (an instant jump never
+      // dispatches it at all): matches the smooth-scroll's own duration, so
+      // the observer is re-armed right as the animation actually finishes.
+      settleTimerRef.current = window.setTimeout(
+        () => {
+          isProgrammaticScrollRef.current = false;
+        },
+        instant ? 50 : 700,
+      );
 
       setIndex(clamped);
       // "instant" is required rather than "auto": the deck sets
@@ -87,11 +117,18 @@ export function useDeckNavigation(): DeckNavigation {
     [],
   );
 
-  const next = useCallback(() => goTo(indexRef.current + 1), [goTo]);
-  const previous = useCallback(() => goTo(indexRef.current - 1), [goTo]);
+  const next = useCallback(
+    () => goTo(targetIndexRef.current + 1),
+    [goTo],
+  );
+  const previous = useCallback(
+    () => goTo(targetIndexRef.current - 1),
+    [goTo],
+  );
 
   const restart = useCallback(() => {
     setRunId((value) => value + 1);
+    targetIndexRef.current = 0;
     setIndex(0);
     window.scrollTo({ top: 0, behavior: "instant" });
   }, []);
@@ -106,17 +143,35 @@ export function useDeckNavigation(): DeckNavigation {
 
     const observer = new IntersectionObserver(
       (entries) => {
+        // A goTo-driven scroll is still in flight — the slides passing
+        // through the middle band right now are scenery, not a position
+        // change. Let the settle timer (or 'scrollend' below) re-arm this.
+        if (isProgrammaticScrollRef.current) return;
         for (const entry of entries) {
           if (!entry.isIntersecting) continue;
           const found = slideRefs.current.indexOf(entry.target as HTMLElement);
-          if (found >= 0) setIndex(found);
+          if (found >= 0) {
+            targetIndexRef.current = found;
+            setIndex(found);
+          }
         }
       },
       { rootMargin: "-45% 0px -45% 0px", threshold: 0 },
     );
 
     nodes.forEach((node) => observer.observe(node));
-    return () => observer.disconnect();
+
+    // Clears the suppression the moment the browser confirms scrolling has
+    // actually stopped, rather than waiting out the timeout fallback above.
+    function onScrollEnd() {
+      isProgrammaticScrollRef.current = false;
+    }
+    window.addEventListener("scrollend", onScrollEnd);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scrollend", onScrollEnd);
+    };
   }, [runId]);
 
   return {
