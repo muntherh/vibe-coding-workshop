@@ -16,6 +16,16 @@
  */
 export type DeckDirection = "ltr" | "rtl";
 
+/**
+ * The deck's name, as shown in the presenter chrome.
+ *
+ * It lives here rather than inside DeckChrome for one reason: a title
+ * hard-coded in a component is a title nobody remembers to change, and the
+ * failure mode is a scaffolded deck presenting under the template's name in
+ * front of a room. `scaffold.sh` fills this in from the title you pass it.
+ */
+export const DECK_TITLE = "Workshop";
+
 export const DECK_LOCALE = "en";
 
 // The `as DeckDirection` is load-bearing, not decoration. Written as a plain

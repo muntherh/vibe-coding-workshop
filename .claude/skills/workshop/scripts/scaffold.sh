@@ -66,7 +66,8 @@ subst "$SKILL_DIR/assets/project/index.html"   > "$TARGET/index.html"
 subst "$SKILL_DIR/assets/project/package.json" > "$TARGET/package.json"
 
 # --- deck config -----------------------------------------------------------
-sed -e "s|^export const DECK_LOCALE = .*|export const DECK_LOCALE = \"${LANG_CODE}\";|" \
+sed -e "s|^export const DECK_TITLE = .*|export const DECK_TITLE = \"${TITLE}\";|" \
+    -e "s|^export const DECK_LOCALE = .*|export const DECK_LOCALE = \"${LANG_CODE}\";|" \
     -e "s|^export const DECK_DIRECTION = .*|export const DECK_DIRECTION = \"${DIR_CODE}\" as DeckDirection;|" \
     "$SKILL_DIR/assets/shell/deck.config.ts" > "$TARGET/src/deck.config.ts"
 

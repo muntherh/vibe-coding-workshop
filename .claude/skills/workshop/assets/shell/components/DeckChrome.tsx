@@ -8,6 +8,7 @@ import {
 import { NavigationControls } from "@/components/NavigationControls";
 import { ProgressIndicator } from "@/components/ProgressIndicator";
 import { SLIDES } from "@/data/slides";
+import { DECK_TITLE } from "@/deck.config";
 import { cn } from "@/lib/cn";
 
 interface DeckChromeProps {
@@ -62,11 +63,11 @@ export function DeckChrome({
             onSelect(0);
           }}
           className="flex items-center gap-2 sm:gap-3"
-          aria-label="Introduction to Vibe Coding"
+          aria-label={DECK_TITLE}
         >
           <div className="hidden flex-col items-start sm:flex">
             
-            <span className="text-[0.92rem] font-medium tracking-tight text-chalk">Vibe Coding</span>
+            <span className="text-[0.92rem] font-medium tracking-tight text-chalk">{DECK_TITLE}</span>
           </div>
         </a>
 
